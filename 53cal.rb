@@ -10,9 +10,10 @@ class GomiCal
     attr_reader :date
     attr_reader :info
 
-    def initialize(city_id, area_id)
+    def initialize(city_id, area_id, date_diff)
         @city_id = city_id
         @area_id = area_id
+        @date = Date.today - date_diff
 
         @url = getUrl()
         ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1'
@@ -21,7 +22,6 @@ class GomiCal
 
         @name   = page.css('#sm_page > h3').inner_text
         @jmonth = page.css('div.arealist_01 table')[0].css('tr td h3').inner_text
-        @date   = Date.today
         @jday   = page.css('div.arealist_01 table')[1].css('tr')[@date.mday - 1].css('td')[0].inner_text
         @info   = page.css('div.arealist_01 table')[1].css('tr')[@date.mday - 1].css('td')[1].inner_text
     end
@@ -50,7 +50,9 @@ end
 if __FILE__ == $0
     city_id = ARGV[0] #1140131
     area_id = ARGV[1] #1140131103
-    cal = GomiCal.new(city_id, area_id)
+    date_diff = ARGV[2].to_i # 0
+
+    cal = GomiCal.new(city_id, area_id, date_diff)
 
     message = ''
     if cal.isBurnableDay() then
