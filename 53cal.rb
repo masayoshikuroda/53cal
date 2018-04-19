@@ -19,7 +19,9 @@ class GomiCal
         html = open(@url, 'User-Agent' => ua) do |f| f.read end
         page = Nokogiri::HTML.parse(html, nil, 'UTF-8')
 
-        @name   = page.css('#sm_page > h3').inner_text
+	puts page.css(#sm_page h3") puts test
+        #@name   = page.css('#sm_page h3').inner_text
+	puts @name
         @jmonth = page.css('div.arealist_01 table')[0].css('tr td h3').inner_text
         @date   = Date.today
         @jday   = page.css('div.arealist_01 table')[1].css('tr')[@date.mday - 1].css('td')[0].inner_text
