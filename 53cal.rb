@@ -35,7 +35,7 @@ class GomiCal
     end
 
     def isPetDay
-        return @info.include?('ペットボトル・プラクル')
+        return @info.include?('ペットボトル')
     end
 
     def isNonBurnableDay
